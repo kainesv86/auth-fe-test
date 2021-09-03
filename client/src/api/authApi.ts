@@ -1,13 +1,19 @@
 import { AxiosInstance } from "axios";
 
 import http from "./axiosCommon";
-import { User, UserLoginDto } from "../common/interface/dto/auth.dto";
+import { User, UserLoginDto, UserRegisterDto } from "../common/interface/dto/auth.dto";
 
 export class AuthAPI {
         constructor(private readonly apiCall: AxiosInstance, readonly prefix: string) {}
 
         async loginUser(input: UserLoginDto) {
                 const url = `${this.prefix + "/login"}`;
+                const res = await this.apiCall.post(url, input);
+                return res;
+        }
+
+        async registerUser(input: UserRegisterDto) {
+                const url = `${this.prefix + "/register"}`;
                 const res = await this.apiCall.post(url, input);
                 return res;
         }

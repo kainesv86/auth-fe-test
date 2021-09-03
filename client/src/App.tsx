@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Footer from "./components/footer/";
 import Navbar from "./components/navbar/";
 import Login from "./pages/login";
+import Register from "./pages/register";
 
 import { RootState, store } from "./store";
 
@@ -34,7 +35,7 @@ function App() {
                                                 <Login />
                                         </Route>
                                         <Route path="/register">
-                                                <h1>Register</h1>
+                                                <Register />
                                         </Route>
                                         <Route path="/">
                                                 <div className="text-black text-2xl">

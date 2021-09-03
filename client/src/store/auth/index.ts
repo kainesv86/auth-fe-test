@@ -19,6 +19,7 @@ const auth = createSlice({
         },
         extraReducers: (builder) => {
                 builder.addCase(authThunk.loginUser.fulfilled, (state) => ({ ...state, isLogin: true }));
+                builder.addCase(authThunk.registerUser.fulfilled, (state) => ({ ...state, isLogin: true }));
                 builder.addCase(authThunk.getUserInfo.fulfilled, (state, { payload }) => {
                         const newState = { ...state };
                         newState.email = payload.email;
