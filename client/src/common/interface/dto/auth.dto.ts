@@ -14,6 +14,7 @@ export interface UserLoginDto {
 }
 
 export interface UserRegisterDto {
+        fullname: string;
         username: string;
         password: string;
         confirmPassword: string;

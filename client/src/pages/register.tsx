@@ -9,13 +9,17 @@ export interface RegisterProps {}
 const Register: React.FunctionComponent<RegisterProps> = () => {
         const { register, handleSubmit } = useForm<UserRegisterDto>();
         const onSubmit = (data: UserRegisterDto) => {
-                store.dispatch(authThunk.loginUser(data));
+                store.dispatch(authThunk.registerUser(data));
         };
         return (
                 <div className="flex flex-col justify-center items-center">
                         <h1 className="text-gray-800 text-4xl">Register</h1>
                         <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="flex flex-col border-gray-800 rounded p-4 border-2 bg-gray-500 text-white">
+                                        <div className="mb-2">
+                                                <p>Fullname</p>
+                                                <input type="text" className="text-gray-900" {...register("fullname")} />
+                                        </div>
                                         <div className="mb-2">
                                                 <p>Username</p>
                                                 <input type="text" className="text-gray-900" {...register("username")} />

@@ -17,6 +17,14 @@ const loginSchema = Joi.object({
         password: Joi.string().alphanum().min(8).max(40).required(),
 });
 
+const registerSchema = Joi.object({
+        username: Joi.string().alphanum().min(8).max(40).required(),
+        password: Joi.string().alphanum().min(8).max(40).required(),
+        confirmPassword: Joi.any().valid(Joi.ref("password")).required(),
+        fullname: Joi.string().min(8).max(40).required(),
+        email: Joi.string().email().required(),
+});
+
 interface LoginDto {
         username: string;
         password: string;
@@ -33,6 +41,24 @@ router.post("/login", joiValidator(loginSchema), async (req, res) => {
         const token = new User(user.username, user.password, user.fullname, user.email, user._id).generateAuthToken();
         res.cookie("x-auth-token", token, { maxAge: 900000 });
         res.status(200).send("Login successfully");
+});
+
+router.post("/register", joiValidator(registerSchema), async (req, res) => {
+        const { username, password, email, fullname } = req.body as UserDto;
+        const db = getDb();
+
+        let user = (await db?.collection("users").findOne({ username })) as UserDto | undefined;
+        if (user) return res.status(400).send("This username already register");
+
+        const salt = await bcrypt.genSalt(10);
+
+        const newUser = await getDb()
+                ?.collection("users")
+                .insertOne({ username: username, password: bcrypt.hashSync(password, salt), fullname: fullname, email: email });
+
+        if (!newUser) return res.status(400).send("Register failed");
+
+        res.status(200).send("Register successfully");
 });
 
 router.get("/", auth, async (req, res) => {
