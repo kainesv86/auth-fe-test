@@ -61,6 +61,11 @@ router.post("/register", joiValidator(registerSchema), async (req, res) => {
         res.status(200).send("Register successfully");
 });
 
+router.get("/logout", async (req, res) => {
+        res.cookie("x-auth-token", "", { maxAge: -1 });
+        res.status(200).send("Logout successfully");
+});
+
 router.get("/", auth, async (req, res) => {
         const { _id } = req.user as { _id: string };
 
