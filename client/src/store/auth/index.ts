@@ -28,6 +28,7 @@ const auth = createSlice({
                         newState.isLogin = true;
                         return newState;
                 });
+                builder.addCase(authThunk.logoutUser.fulfilled, (state) => ({ ...state, initialState }));
         },
 });
 

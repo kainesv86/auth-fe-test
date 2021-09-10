@@ -23,6 +23,12 @@ export class AuthAPI {
                 const res = await this.apiCall.get<User>(url);
                 return res;
         }
+
+        async logoutUser() {
+                const url = `${this.prefix + "/logout"}`;
+                const res = await this.apiCall.get(url);
+                return res;
+        }
 }
 
 export const authApi = new AuthAPI(http, "/auth");

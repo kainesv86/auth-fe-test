@@ -19,6 +19,10 @@ class AuthThunk {
                 const res = await this.apiCall.getUserInfo();
                 return res.data;
         });
+
+        logoutUser = createAsyncThunk<void, void>("LogoutDto", async () => {
+                await this.apiCall.logoutUser();
+        });
 }
 
 export const authThunk = new AuthThunk(authApi);
